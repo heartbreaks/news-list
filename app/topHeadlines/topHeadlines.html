@@ -2,7 +2,7 @@
 <div ng-controller="TopHeadlinesCtrl" class="news__news-content news__filters_space_left container mt-5">
     <!------------------------COMPONENT FOR FILTERS OF COUNTRIES---------------------------->
    <form ng-submit="getFilteredNews()" class="news__filters row mb-5">
-           <h2 class="news__subheading col-1">Filters:</h2>
+           <h2 class="news__subheading m-0 col-1">Filters:</h2>
            <div class="col-2">
                <select ng-model="filterCountry" class="form-select">
                    <option ng-repeat="country in countries" value="{{country.value}}">{{country.title}}</option>
