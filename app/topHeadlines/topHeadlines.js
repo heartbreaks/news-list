@@ -1,24 +1,63 @@
 'use strict';
 
-angular.module('newsFeed.topHeadlines', ['ngRoute'])
+var app = angular.module('newsFeed.topHeadlines', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/topHeadlines', {
     templateUrl: 'topHeadlines/topHeadlines.html',
     controller: 'TopHeadlinesCtrl'
   });
 }])
 
-.controller('TopHeadlinesCtrl', function($http, $scope) {
-  var options = {
-    headers: {
-      'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'
-    },
-    params: {
-      country: 'us',
-      pageSize: 5
+app.controller('TopHeadlinesCtrl', function($http, $scope) {
+  $scope.filterCountry = ''
+  $scope.filterCategory = ''
+
+  $scope.countries = [
+    {title: 'Russian', value: 'ru'},
+    {title: 'English', value: 'us'}
+  ]
+
+  $scope.categories = [
+    {title: 'Business', value: 'business'},
+    {title: 'Entertainment', value: 'entertainment'},
+    {title: 'General', value: 'general'},
+    {title: 'Health', value: 'health'},
+    {title: 'Technology', value: 'technology'},
+  ]
+
+  /* declaring functions */
+  $scope.networkRequest = function (country = 'ru', category = '') {
+    $http.get('https://newsapi.org/v2/top-headlines', {
+      headers: {'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'},
+      params: {
+        pageSize: 5,
+        country,
+        category
+      }
+    }).then(function (response) {
+      $scope.news = response.data.articles
+    })
+  }
+
+  $scope.getFilteredNews = function () {
+    $scope.networkRequest($scope.filterCountry, $scope.filterCategory)
+  }
+
+  /* get all news without params */
+  $scope.networkRequest()
+
+
+})
+
+
+app.directive('newsHeadlines', function ($http) {
+
+
+  return {
+    restrict: 'E',
+    templateUrl: './Components/News-card.component.html',
+    link: function (scope, element, attrs){
     }
   }
-  var response = $http.get('https://newsapi.org/v2/top-headlines', options);
-  console.log(response, $scope)
-});
+})
