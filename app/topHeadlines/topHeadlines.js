@@ -28,7 +28,8 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
   ]
 
   var url = 'https://newsapi.org/v2/top-headlines';
-  var params = { pageList: 1, pageSize: 5, country: 'us' };
+  var params = { page: 1, pageSize: 5, country: 'us' };
+  var prevParams = params
 
   $scope.getFilteredNews = function () {
     params.country = $scope.filterCountry;
@@ -41,8 +42,17 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
 
   /* get all news without params */
   $scope.networkRequest(url, params).then(function ({res, totalNews}) {
+    prevParams = params
     $scope.news = res
   })
+
+  $scope.paginate = function (pageList) {
+    var actualParams = {...prevParams, page: pageList}
+    console.log(actualParams)
+    $scope.networkRequest(url, actualParams).then(function ({res, totalNews}) {
+      $scope.news = res
+    })
+  }
 
 
 })

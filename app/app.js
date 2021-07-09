@@ -34,18 +34,18 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
   }
 
-  $scope.getTotalPages = function () {
+  $scope.getTotalPages = function (start = 1) {
     var arr = []
 
     if ($scope.totalPages < 20) {
-      for (var i = 1; i <= $scope.totalPages; i++) {
-        arr.push(i)
+      for (start; start <= $scope.totalPages; start++) {
+        arr.push(start)
       }
       return arr
     }
 
-    for (var i = 1; i <= 18; i++) {
-      arr.push(i)
+    for (start; start <= 18; start++) {
+      arr.push(start)
     }
 
     arr.push('...', $scope.totalPages)
