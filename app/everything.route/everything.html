@@ -16,24 +16,7 @@
     <news-everything></news-everything>
   </div>
   <!------------------------------COMPONENT OF PAGINATION----------------------------------->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="news__pagination">
+  <div class="news__pagination  d-flex justify-content-center">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item">
@@ -41,9 +24,7 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li ng-repeat="pageTab in getTotalPages(1)" class="page-item"><a class="page-link">{{ pageTab }}</a></li>
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>

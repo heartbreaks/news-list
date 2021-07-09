@@ -34,12 +34,13 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
     params.country = $scope.filterCountry;
     params.category = $scope.filterCategory;
 
-    $scope.networkRequest(url, params) .then(function (res) {
+    $scope.networkRequest(url, params) .then(function ({res, totalNews}) {
       $scope.news = res
     })
   }
+
   /* get all news without params */
-  $scope.networkRequest(url, params).then(function (res) {
+  $scope.networkRequest(url, params).then(function ({res, totalNews}) {
     $scope.news = res
   })
 

@@ -17,13 +17,13 @@ angular.module('newsFeed.everything', ['ngRoute'])
 
   $scope.getKeywordsNews = function () {
     params.q = $scope.keyword
-    $scope.networkRequest(url, params).then(function (res) {
+    $scope.networkRequest(url, params).then(function ({res, totalNews}) {
       $scope.news = res
     })
     $scope.keyword = ''
   }
 
-  $scope.networkRequest(url, params, {q: 'it'}).then(function (res) {
+  $scope.networkRequest(url, params, {q: 'it'}).then(function ({res, totalNews}) {
     $scope.news = res
   })
 })
