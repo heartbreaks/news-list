@@ -30,20 +30,6 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
   var url = 'https://newsapi.org/v2/top-headlines';
   var params = { pageList: 1, pageSize: 5, country: 'us' };
 
-    /* declaring functions */
-  // $scope.networkRequest = function (country = 'ru', category = '') {
-  //   $http.get('https://newsapi.org/v2/top-headlines', {
-  //     headers: {'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'},
-  //     params: {
-  //       pageSize: 5,
-  //       country,
-  //       category
-  //     }
-  //   }).then(function (response) {
-  //     $scope.news = response.data.articles
-  //   })
-  // }
-
   $scope.getFilteredNews = function () {
     params.country = $scope.filterCountry;
     params.category = $scope.filterCategory;

@@ -24,23 +24,8 @@ angular.module('newsFeed.everything', ['ngRoute'])
   }
 
   $scope.networkRequest(url, params, {q: 'it'}).then(function (res) {
-    console.log(res)
     $scope.news = res
   })
-
-  // $scope.networkRequest = function (params = 'it') {
-  //   $http.get('https://newsapi.org/v2/everything', {
-  //     headers: { 'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'},
-  //     params: {
-  //       language: 'ru',
-  //       pageSize: 5,
-  //       q: params
-  //     }
-  //   }).then(function (response) {
-  //     console.log(response.data.articles)
-  //     $scope.news = response.data.articles
-  //   })
-  // }
 })
 
 .directive('newsEverything', function ($http) {
