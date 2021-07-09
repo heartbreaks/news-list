@@ -14,9 +14,12 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 .controller('newsFeed', function ($scope,$http) {
   var totalPages = []
+  $scope.show = true
 
   $scope.networkRequest = function (url, params, ...args) {
     try {
+      // throw new Error('Test Alert')
+
       var answerFromApi = $http.get(url, {
         headers: {'x-api-key': '53220362b5044a9a9cbdf73bde56d0b8'},
         params: args.length > 0 ? {...params, ...args[0]} : params
@@ -30,9 +33,12 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
       return answerFromApi
     } catch (err) {
-      console.log(err)
+      $scope.show = true
+      console.log($scope)
     }
   }
+
+
 
   $scope.getTotalPages = function (start = 1) {
     var arr = []

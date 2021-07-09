@@ -21,6 +21,11 @@
   border-color: #2e6da4;
 }
 
+.alert-danger {
+  top: 15px;
+  right: 15px;
+}
+
 a {
   cursor: pointer;
 }

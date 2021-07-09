@@ -63,7 +63,7 @@ app.directive('newsHeadlines', function ($http) {
 
   return {
     restrict: 'E',
-    templateUrl: './Components/News-card.component.html',
+    templateUrl: './directions/news-card.direction.html',
     link: function (scope, element, attrs){
     }
   }
