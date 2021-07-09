@@ -1,0 +1,16 @@
+<div ng-repeat="card in news" class="border news__news-card mb-3 rounded">
+  <div class="border-bottom news__card-title">
+    <h3 class="news__card-heading p-3 m-0">{{card.title}}</h3>
+  </div>
+  <div class="news__card-body row p-3">
+    <div class="news__card-text col-9">
+      <p>
+        {{card.description}}
+      </p>
+      <a href="{{card.url}}">
+        <button type="button" class="btn btn-primary">{{card.source.name}}</button>
+      </a>
+    </div>
+    <img alt="Image of news" class="img-thumbnail p-1 news__card-image col-3" width="200" height="200" src="{{card.urlToImage}}"/>
+  </div>
+</div>
