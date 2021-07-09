@@ -10,36 +10,40 @@ angular.module('newsFeed.everything', ['ngRoute'])
 }])
 
 .controller('EverythingNewsCtrl', function EverythingNewsCtrl($scope, $http) {
-  var headers = { headers: { 'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'}}
   $scope.keyword = ''
-
-  $scope.networkRequest = function (params = 'it') {
-    $http.get('https://newsapi.org/v2/everything', {
-      headers: { 'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'},
-      params: {
-        language: 'ru',
-        pageSize: 5,
-        q: params
-      }
-    }).then(function (response) {
-      console.log(response.data.articles)
-      $scope.news = response.data.articles
-    })
-  }
-
-  $scope.networkRequest()
+  var url = 'https://newsapi.org/v2/everything'
+  var params = { pageSize: 5, pageList: 1 }
 
 
   $scope.getKeywordsNews = function () {
-    $scope.networkRequest($scope.keyword)
+    params.q = $scope.keyword
+    $scope.networkRequest(url, params).then(function (res) {
+      $scope.news = res
+    })
     $scope.keyword = ''
   }
 
+  $scope.networkRequest(url, params, {q: 'it'}).then(function (res) {
+    console.log(res)
+    $scope.news = res
+  })
+
+  // $scope.networkRequest = function (params = 'it') {
+  //   $http.get('https://newsapi.org/v2/everything', {
+  //     headers: { 'x-api-key': 'e7c33e246f004bbc9dc33a58762a1d53'},
+  //     params: {
+  //       language: 'ru',
+  //       pageSize: 5,
+  //       q: params
+  //     }
+  //   }).then(function (response) {
+  //     console.log(response.data.articles)
+  //     $scope.news = response.data.articles
+  //   })
+  // }
 })
 
 .directive('newsEverything', function ($http) {
-
-
   return {
     restrict: 'E',
     templateUrl: './Components/News-card.component.html',
