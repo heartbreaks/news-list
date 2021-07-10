@@ -9,10 +9,10 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }])
 
-app.controller('TopHeadlinesCtrl', function($http, $scope) {
+app.controller('TopHeadlinesCtrl', function($http, $scope, networkRequests, paginationManager) {
   var url = 'https://newsapi.org/v2/top-headlines';
-  var params = { page: 1, pageSize: 5, country: 'us' };
-
+  $scope.currentPage = 1
+  $scope.news = networkRequests.currentNews
   $scope.filterCountry = ''
   $scope.filterCategory = ''
 
@@ -29,27 +29,35 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
     {title: 'Technology', value: 'technology'},
   ]
 
-  $scope.prevParams = params
+  // $scope.prevParams = params
 
   $scope.getFilteredNews = function () {
-    params.country = $scope.filterCountry;
-    params.category = $scope.filterCategory;
-    $scope.prevParams = params
+    $scope.currentPage = 1
 
-    $scope.networkRequest(url, params) .then(function ({res}) {
+    networkRequests.get(url, {
+      ...networkRequests.prevParams,
+      ...{
+        country: $scope.filterCountry,
+        category: $scope.filterCategory,
+        page: $scope.currentPage,
+      }
+    }) .then(function ({res}) {
       $scope.news = res
     })
+  //
+  //   console.log(networkRequests.prevParams)
   }
 
   /* get all news without params */
-  $scope.networkRequest(url, params).then(function ({res}) {
-    $scope.prevParams = params
+  networkRequests.get(url, { page: 1, pageSize: 5, country: 'us' })
+    .then(function ({res}) {
     $scope.news = res
   })
 
   $scope.paginate = function (pageList) {
-    $scope.prevParams = {...$scope.prevParams, page: pageList}
-    $scope.networkRequest(url, $scope.prevParams).then(function ({res}) {
+    $scope.currentPage = pageList
+
+    networkRequests.get(url, {...networkRequests.prevParams, page: pageList}).then(function ({res}) {
       $scope.news = res
     })
   }

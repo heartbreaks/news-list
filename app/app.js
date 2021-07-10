@@ -11,45 +11,10 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $routeProvider.otherwise({redirectTo: '/topHeadlines'});
 }])
-  .controller('newsFeed', function ($scope,$http, alertsManager) {
+  .controller('newsFeed', function ($scope,$http, alertsManager, paginationManager) {
     // $scope.alerts = alertsManager.alerts // need to delete
 
-    $scope.networkRequest = function (url, params, ...args) {
-        var answerFromApi = $http.get(url, {
-          headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
-          params: args.length > 0 ? {...params, ...args[0]} : params
-        })
-          .then(function (res) {
-            console.log(res)
-            $scope.totalPages = Math.round(res.data.totalResults / 5)
-            return {
-              res: res.data.articles,
-              totalPages: $scope.getTotalPages()
-          }
-        }).
-          catch(function (err) {
-            alertsManager.addError(err.data.message)
-        })
-
-        return answerFromApi
-  }
-
-  $scope.getTotalPages = function (start = 1) {
-    var arr = []
-
-    if ($scope.totalPages < 20) {
-      for (start; start <= $scope.totalPages; start++) {
-        arr.push(start)
-      }
-      return arr
-    }
-
-    for (start; start <= 21; start++) {
-      arr.push(start)
-    }
-
-    return arr
-  }
+  $scope.getTotalPages = paginationManager.getTotalPages
 })
   /*
   * need delete this shit
@@ -72,8 +37,63 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         self.alerts.push({body})
       },
       deleteError: function () {
-        this.alerts.shift()
+        this.alerts = []
         return this.alerts
       }
     }
   })
+
+  .factory('paginationManager', function () {
+    var totalPages = 1
+
+    return {
+      getTotalPages: function (start = 1) {
+        var arr = []
+
+        if (totalPages < 20) {
+          for (start; start <= totalPages; start++) {
+            arr.push(start)
+          }
+          return arr
+        }
+
+        for (start; start <= 21; start++) {
+          arr.push(start)
+        }
+
+        return arr
+      },
+      setTotalPages: function (newPages) {
+        totalPages = newPages
+      },
+    }
+    }
+  )
+
+.factory('networkRequests', function ($http, alertsManager, paginationManager) {
+
+  return {
+    get: function (url, params, ...args) {
+      var self = this
+
+      self.prevParams = params
+
+      var answerFromApi = $http.get(url, {
+        headers: {'x-api-key': '694edb8d37b24bcab625941233b8356e'},
+        params: args.length > 0 ? {...params, ...args[0]} : params
+      })
+        .then(function (res) {
+          paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
+          self.currentNews = res.data.articles
+          console.log(self)
+          return { res: res.data.articles, }
+        })
+        .catch(function (err) {
+          alertsManager.addError(err.data.message)
+        })
+
+      return answerFromApi
+    },
+    prevParams: { page: 1, pageSize: 5, country: 'us' }
+  }
+})
