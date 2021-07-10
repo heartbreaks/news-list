@@ -10,6 +10,8 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 app.controller('TopHeadlinesCtrl', function($http, $scope) {
+  var url = 'https://newsapi.org/v2/top-headlines';
+  var params = { page: 1, pageSize: 5, country: 'us' };
 
   $scope.filterCountry = ''
   $scope.filterCategory = ''
@@ -27,22 +29,30 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
     {title: 'Technology', value: 'technology'},
   ]
 
-  var url = 'https://newsapi.org/v2/top-headlines';
-  var params = { pageList: 1, pageSize: 5, country: 'us' };
+  $scope.prevParams = params
 
   $scope.getFilteredNews = function () {
     params.country = $scope.filterCountry;
     params.category = $scope.filterCategory;
+    $scope.prevParams = params
 
-    $scope.networkRequest(url, params) .then(function ({res, totalNews}) {
+    $scope.networkRequest(url, params) .then(function ({res}) {
       $scope.news = res
     })
   }
 
   /* get all news without params */
-  $scope.networkRequest(url, params).then(function ({res, totalNews}) {
+  $scope.networkRequest(url, params).then(function ({res}) {
+    $scope.prevParams = params
     $scope.news = res
   })
+
+  $scope.paginate = function (pageList) {
+    $scope.prevParams = {...$scope.prevParams, page: pageList}
+    $scope.networkRequest(url, $scope.prevParams).then(function ({res}) {
+      $scope.news = res
+    })
+  }
 
 
 })
@@ -50,10 +60,9 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
 
 app.directive('newsHeadlines', function ($http) {
 
-
   return {
     restrict: 'E',
-    templateUrl: './Components/News-card.component.html',
+    templateUrl: './directive/news-card.directive.html',
     link: function (scope, element, attrs){
     }
   }

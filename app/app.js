@@ -14,9 +14,11 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 .controller('newsFeed', function ($scope,$http) {
   var totalPages = []
+  $scope.show = true
 
   $scope.networkRequest = function (url, params, ...args) {
     try {
+
       var answerFromApi = $http.get(url, {
         headers: {'x-api-key': '53220362b5044a9a9cbdf73bde56d0b8'},
         params: args.length > 0 ? {...params, ...args[0]} : params
@@ -30,25 +32,26 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
       return answerFromApi
     } catch (err) {
-      console.log(err)
+      alert('Ошибка запроса')
     }
   }
 
-  $scope.getTotalPages = function () {
+
+
+  $scope.getTotalPages = function (start = 1) {
     var arr = []
 
     if ($scope.totalPages < 20) {
-      for (var i = 1; i <= $scope.totalPages; i++) {
-        arr.push(i)
+      for (start; start <= $scope.totalPages; start++) {
+        arr.push(start)
       }
       return arr
     }
 
-    for (var i = 1; i <= 18; i++) {
-      arr.push(i)
+    for (start; start <= 18; start++) {
+      arr.push(start)
     }
 
-    arr.push('...', $scope.totalPages)
 
     return arr
   }
