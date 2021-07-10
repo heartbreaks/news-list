@@ -1,3 +1,5 @@
-<div ng-show="true" class="alert alert-danger" role="alert">
-    Во время запроса произошла ошибка
+<div ng-controller="newsFeed">
+    <div ng-if="alerts.length > 0" ng-repeat="alert in alerts" class="alert position-absolute col-2 alert-danger" role="alert">
+        {{alert.body}}
+    </div>
 </div>

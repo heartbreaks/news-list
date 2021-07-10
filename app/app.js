@@ -11,32 +11,28 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $routeProvider.otherwise({redirectTo: '/topHeadlines'});
 }])
+  .controller('newsFeed', function ($scope,$http, alertsManager) {
+    // $scope.alerts = alertsManager.alerts // need to delete
 
-.controller('newsFeed', function ($scope,$http) {
-  var totalPages = []
-  $scope.show = true
+    $scope.networkRequest = function (url, params, ...args) {
+        var answerFromApi = $http.get(url, {
+          headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
+          params: args.length > 0 ? {...params, ...args[0]} : params
+        })
+          .then(function (res) {
+            console.log(res)
+            $scope.totalPages = Math.round(res.data.totalResults / 5)
+            return {
+              res: res.data.articles,
+              totalPages: $scope.getTotalPages()
+          }
+        }).
+          catch(function (err) {
+            alertsManager.addError(err.data.message)
+        })
 
-  $scope.networkRequest = function (url, params, ...args) {
-    try {
-
-      var answerFromApi = $http.get(url, {
-        headers: {'x-api-key': '53220362b5044a9a9cbdf73bde56d0b8'},
-        params: args.length > 0 ? {...params, ...args[0]} : params
-      }).then(function (res) {
-        $scope.totalPages = Math.round(res.data.totalResults / 5)
-        return {
-          res: res.data.articles,
-          totalPages: $scope.getTotalPages()
-        }
-      })
-
-      return answerFromApi
-    } catch (err) {
-      alert('Ошибка запроса')
-    }
+        return answerFromApi
   }
-
-
 
   $scope.getTotalPages = function (start = 1) {
     var arr = []
@@ -48,11 +44,36 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       return arr
     }
 
-    for (start; start <= 18; start++) {
+    for (start; start <= 21; start++) {
       arr.push(start)
     }
-
 
     return arr
   }
 })
+  /*
+  * need delete this shit
+  * */
+
+  // .directive('showAlert', function () {
+  //   return {
+  //     restrict: 'E',
+  //     templateUrl: './directive/alert-danger.directive.html',
+  //     link: function (scope, element, attrs){
+  //     }
+  //   }
+  // })
+
+  .factory('alertsManager', function () {
+    return {
+      alerts: [],
+      addError: function (body) {
+        var self = this
+        self.alerts.push({body})
+      },
+      deleteError: function () {
+        this.alerts.shift()
+        return this.alerts
+      }
+    }
+  })
