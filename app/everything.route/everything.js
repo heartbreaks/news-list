@@ -31,8 +31,7 @@ angular.module('newsFeed.everything', ['ngRoute'])
   })
 
   $scope.paginate = function (pageList) {
-    $scope.prevParams.page = pageList
-    console.log($scope.prevParams)
+    $scope.prevParams = {...$scope.prevParams, page: pageList}
     $scope.networkRequest(url, $scope.prevParams).then(function ({res, totalNews}) {
       $scope.news = res
     })

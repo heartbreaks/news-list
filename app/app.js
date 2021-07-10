@@ -54,7 +54,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       arr.push(start)
     }
 
-    arr.push('...', $scope.totalPages)
 
     return arr
   }
