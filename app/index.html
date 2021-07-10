@@ -27,11 +27,7 @@
 </header>
 <body>
 
-  <section ng-controller="newsFeed" class="container news" ng-view>
-    <div ng-show="show" class="alert alert-danger position-absolute col-2 mr-2 mt-5" role="alert">
-      Во время запроса произошла ошибка
-    </div>
-  </section>
+  <section ng-controller="newsFeed" class="container news" ng-view></section>
 
 
   <!-- In production use:
@@ -43,6 +39,6 @@
   <script src="app.js"></script>
   <script src="topHeadlines/topHeadlines.js"></script>
   <script src="everything.route/everything.js"></script>
-  <script type="text/html" src="directions/news-card.direction.html"></script>
+  <script type="text/html" src="directive/news-card.directive.html"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@ angular.module('newsFeed.everything', ['ngRoute'])
 .directive('newsEverything', function ($http) {
   return {
     restrict: 'E',
-    templateUrl: './directions/news-card.direction.html',
+    templateUrl: './directive/news-card.directive.html',
     link: function (scope, element, attrs){
     }
   }

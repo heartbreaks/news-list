@@ -29710,7 +29710,7 @@ var ngIncludeFillContentDirective = ['$compile',
  *   <li>injecting data via server side scripting.</li>
  * </ul>
  *
- * Besides these few cases, you should use {@link guide/component directions} or
+ * Besides these few cases, you should use {@link guide/component directive} or
  * {@link guide/controller Controllers} rather than `ngInit` to initialize values on a scope.
  * </div>
  *
