@@ -36,20 +36,20 @@ app.controller('TopHeadlinesCtrl', function($http, $scope) {
     params.category = $scope.filterCategory;
     $scope.prevParams = params
 
-    $scope.networkRequest(url, params) .then(function ({res, totalNews}) {
+    $scope.networkRequest(url, params) .then(function ({res}) {
       $scope.news = res
     })
   }
 
   /* get all news without params */
-  $scope.networkRequest(url, params).then(function ({res, totalNews}) {
+  $scope.networkRequest(url, params).then(function ({res}) {
     $scope.prevParams = params
     $scope.news = res
   })
 
   $scope.paginate = function (pageList) {
     $scope.prevParams = {...$scope.prevParams, page: pageList}
-    $scope.networkRequest(url, $scope.prevParams).then(function ({res, totalNews}) {
+    $scope.networkRequest(url, $scope.prevParams).then(function ({res}) {
       $scope.news = res
     })
   }
