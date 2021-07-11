@@ -4,7 +4,7 @@ var app = angular.module('newsFeed.topHeadlines', ['ngRoute'])
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/topHeadlines', {
-    templateUrl: 'topHeadlines/topHeadlines.html',
+    templateUrl: 'routes/top-headlines.route/topHeadlines.html',
     controller: 'TopHeadlinesCtrl'
   });
 }])

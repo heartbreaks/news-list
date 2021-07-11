@@ -77,6 +77,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
           self.setFetching(false)
         })
         .catch(function (err) {
+
+          self.setFetching(false)
           alertsManager.addError(err?.data.message)
           $rootScope.$broadcast('updateCards', [])
         })
