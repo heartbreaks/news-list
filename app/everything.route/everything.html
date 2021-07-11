@@ -19,14 +19,14 @@
   <div class="news__pagination  d-flex justify-content-center">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" ng-class="{disabled: prevParams.page === 1}">
-          <a ng-click="paginate(prevParams.page - 1)" class="page-link" href="#" aria-label="Previous">
-            <span ng-click="paginate(prevParams.page - 1)" aria-hidden="true">&laquo;</span>
+        <li class="page-item" ng-class="{disabled: currenPage === 1}">
+          <a ng-click="paginate(currenPage - 1)" class="page-link" href="#" aria-label="Previous">
+            <span ng-click="paginate(currenPage - 1)" aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li ng-repeat="pageTab in getTotalPages()" ng-class="{active: prevParams.page === pageTab}"  class="page-item"><a ng-click="paginate(pageTab)" class="page-link">{{ pageTab }}</a></li>
+        <li ng-repeat="pageTab in getTotalPages()" ng-class="{active: currenPage === pageTab}"  class="page-item"><a ng-click="paginate(pageTab)" class="page-link">{{ pageTab }}</a></li>
         <li class="page-item" ng-class="{disabled: getTotalPages().length === prevParams.page}">
-          <a ng-click="paginate(prevParams.page + 1)" class="page-link" aria-label="Next">
+          <a ng-click="paginate(currenPage + 1)" class="page-link" aria-label="Next">
             <span  aria-hidden="true">&raquo;</span>
           </a>
         </li>
