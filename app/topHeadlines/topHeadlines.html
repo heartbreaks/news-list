@@ -1,23 +1,10 @@
 <h1 class="news__heading mt-3 ml-3">Top headlines</h1>
 <div ng-controller="TopHeadlinesCtrl" class="news__news-content news__filters_space_left container mt-5">
     <!------------------------COMPONENT FOR FILTERS OF COUNTRIES---------------------------->
-   <form ng-submit="getFilteredNews()" class="news__filters row mb-5">
-           <h2 class="news__subheading m-0 col-1">Filters:</h2>
-           <div class="col-2">
-               <select ng-model="filterCountry" class="form-select">
-                   <option ng-repeat="country in countries" value="{{country.value}}">{{country.title}}</option>
-               </select>
-           </div>
-           <div class="col-2">
-               <select ng-model="filterCategory" class="form-select">
-                   <option ng-repeat="category in categories" value="{{category.value}}">{{category.title}}</option>
-               </select>
-           </div>
-           <button type="submit" class="btn btn-primary col-2">Filter</button>
-       </form>
+   <filter-category-country></filter-category-country>
     <!------------------------------COMPONENT CARDS LIST----------------------------------->
    <div class="news__news-cards-list news__filters_space_top">
-        <news-headlines></news-headlines>
+        <card-news></card-news>
    </div>
     <!------------------------------COMPONENT OF PAGINATION----------------------------------->
    <div class="news__pagination  d-flex justify-content-center">

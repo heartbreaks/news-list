@@ -61,17 +61,18 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       self.prevParams = params
 
       var answerFromApi = $http.get(url, {
-        headers: {'x-api-key': '694edb8d37b24bcab625941233b8356e'},
+        headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
         params
       })
         .then(function (res) {
           paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
           self.currentNews = res.data.articles
-          console.log(self)
+          $rootScope.$broadcast('updateCards', res.data.articles)
           return { res: res.data.articles, }
         })
         .catch(function (err) {
           alertsManager.addError(err?.data.message)
+          $rootScope.$broadcast('updateCards', [])
         })
 
       return answerFromApi
