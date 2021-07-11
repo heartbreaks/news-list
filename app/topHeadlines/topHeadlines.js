@@ -29,8 +29,6 @@ app.controller('TopHeadlinesCtrl', function($http, $scope, networkRequests, pagi
     {title: 'Technology', value: 'technology'},
   ]
 
-  // $scope.prevParams = params
-
   $scope.getFilteredNews = function () {
     $scope.currentPage = 1
 
@@ -44,8 +42,6 @@ app.controller('TopHeadlinesCtrl', function($http, $scope, networkRequests, pagi
     }) .then(function ({res}) {
       $scope.news = res
     })
-  //
-  //   console.log(networkRequests.prevParams)
   }
 
   /* get all news without params */

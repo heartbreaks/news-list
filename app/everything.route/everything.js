@@ -15,25 +15,33 @@ angular.module('newsFeed.everything', ['ngRoute'])
   $scope.totalPages = paginationManager.getTotalPages()
 
   $scope.keyword = ''
-  $scope.prevParams = params
+  $scope.currenPage = 1
 
 
   $scope.getKeywordsNews = function () {
-    params.q = $scope.keyword
-    networkRequests.get(url, params).then(function ({res}) {
+    $scope.currenPage = 1
+
+    networkRequests.get(url, {
+      ...networkRequests.prevParams,
+      ...{
+        q: $scope.keyword,
+        page: 1
+      }
+    }).then(function ({res}) {
       $scope.prevParams = params
       $scope.news = res
     })
     $scope.keyword = ''
   }
 
-  networkRequests.get(url, params, {q: 'it'}).then(function ({res}) {
+  networkRequests.get(url, { pageSize: 5, page: 1, q: 'it' }).then(function ({res}) {
     $scope.news = res
   })
 
   $scope.paginate = function (pageList) {
-    $scope.prevParams = {...$scope.prevParams, page: pageList}
-    networkRequests.get(url, $scope.prevParams).then(function ({res, totalNews}) {
+    $scope.currenPage = pageList
+
+    networkRequests.get(url, {...networkRequests.prevParams, page: pageList}).then(function ({res, totalNews}) {
       $scope.news = res
 
     }).catch(function (e) {$scope.news = []})

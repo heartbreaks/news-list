@@ -12,22 +12,9 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $routeProvider.otherwise({redirectTo: '/topHeadlines'});
 }])
   .controller('newsFeed', function ($scope,$http, alertsManager, paginationManager) {
-    // $scope.alerts = alertsManager.alerts // need to delete
 
   $scope.getTotalPages = paginationManager.getTotalPages
 })
-  /*
-  * need delete this shit
-  * */
-
-  // .directive('showAlert', function () {
-  //   return {
-  //     restrict: 'E',
-  //     templateUrl: './directive/alert-danger.directive.html',
-  //     link: function (scope, element, attrs){
-  //     }
-  //   }
-  // })
 
   .factory('alertsManager', function ($rootScope) {
     return {
@@ -75,7 +62,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
       var answerFromApi = $http.get(url, {
         headers: {'x-api-key': '694edb8d37b24bcab625941233b8356e'},
-        params: args.length > 0 ? {...params, ...args[0]} : params
+        params
       })
         .then(function (res) {
           paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
