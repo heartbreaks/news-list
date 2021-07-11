@@ -14,17 +14,16 @@ angular.module('newsFeed')
     self.keyword = ''
 
     self.getKeywordsNews = function () {
-        paginationManager.setCurrentPage(1)
+      paginationManager.setCurrentPage(1)
 
-        networkRequests.get(networkRequests.url, {
-          ...networkRequests.prevParams,
-          ...{
-            q: self.keyword,
-            page: 1
-          }
-        })
-        self.keyword = ''
-      }
-
+      networkRequests.get(networkRequests.url, {
+        ...networkRequests.prevParams,
+        ...{
+          q: self.keyword,
+          page: 1
+        }
+      })
+      self.keyword = ''
     }
+  }
 })

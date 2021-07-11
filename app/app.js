@@ -79,7 +79,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         .catch(function (err) {
 
           self.setFetching(false)
-          alertsManager.addError(err?.data.message)
+          alertsManager.addError(err.data.message)
           $rootScope.$broadcast('updateCards', [])
         })
 
@@ -88,7 +88,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     url: '',
     prevParams: { page: 1, pageSize: 5, country: 'us' },
     setFetching: function (params) {
-        $rootScope.$broadcast('fetchingUpdate', params)
+      $rootScope.$broadcast('fetchingUpdate', params)
     }
   }
 })

@@ -1,11 +1,12 @@
 <h1 class="news__heading mt-3 ml-3">Top headlines</h1>
 <div ng-controller="TopHeadlinesCtrl" class="news__news-content news__filters_space_left container mt-5">
-    <!------------------------COMPONENT FOR FILTERS OF COUNTRIES---------------------------->
    <filter-category-country></filter-category-country>
-    <!------------------------------COMPONENT CARDS LIST----------------------------------->
+
+   <loader></loader>
+
    <div class="news__news-cards-list news__filters_space_top">
         <card-news></card-news>
    </div>
-    <!------------------------------COMPONENT OF PAGINATION----------------------------------->
+
    <pagination></pagination>
 </div>
