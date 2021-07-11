@@ -7,7 +7,6 @@ angular.module('newsFeed')
     controller: function alertController($scope, $timeout) {
       var self = this;
 
-
       $scope.$on('error', function (event, args) {
         self.message = args.alert
         self.state = args.state

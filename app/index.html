@@ -29,7 +29,6 @@
 
   <section ng-controller="newsFeed" class="container news" ng-view></section>
   <alert></alert>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
@@ -37,10 +36,13 @@
   <script src="lib/angular-route/angular-route.js"></script>
 
   <script src="app.js"></script>
-  <script src="topHeadlines/topHeadlines.js"></script>
-  <script src="everything.route/everything.js"></script>
+  <script src="routes/top-headlines.route/topHeadlines.js"></script>
+  <script src="routes/everything.route/everything.js"></script>
   <script src="components/alert.component.js"></script>
-  <script type="text/html" src="directive/news-card.directive.html"></script>
-  <script src="directive/pagination.directive.html" type="text/html"></script>
+  <script src="components/news-card.component.js"></script>
+  <script src="components/filter-keyword.component.js"></script>
+  <script src="components/filter-category-country.component.js"></script>
+  <script src="components/pagination.component.js"></script>
+  <script src="components/loader.component.js"></script>
 </body>
 </html>

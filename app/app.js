@@ -26,8 +26,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
   })
 
-  .factory('paginationManager', function () {
-    var totalPages = 1
+  .factory('paginationManager', function ($rootScope) {
+    var totalPages = 0
 
     return {
       getTotalPages: function (start = 1) {
@@ -48,34 +48,47 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       },
       setTotalPages: function (newPages) {
         totalPages = newPages
+        $rootScope.$broadcast('updatePages', this.getTotalPages())
       },
+      setCurrentPage: function (page) {
+        $rootScope.$broadcast('setFilteredPage', page)
+      }
     }
     }
   )
 
 .factory('networkRequests', function ($http, alertsManager, paginationManager, $rootScope) {
   return {
-    get: function (url, params, ...args) {
+    get: function (url, params) {
       var self = this
 
       self.prevParams = params
+      self.url = url
+
+      self.setFetching(true)
 
       var answerFromApi = $http.get(url, {
-        headers: {'x-api-key': '694edb8d37b24bcab625941233b8356e'},
+        headers: {'x-api-key': '53220362b5044a9a9cbdf73bde56d0b8'},
         params
       })
         .then(function (res) {
           paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
-          self.currentNews = res.data.articles
-          console.log(self)
-          return { res: res.data.articles, }
+          $rootScope.$broadcast('updateCards', res.data.articles)
+          self.setFetching(false)
         })
         .catch(function (err) {
-          alertsManager.addError(err?.data.message)
+
+          self.setFetching(false)
+          alertsManager.addError(err.data.message)
+          $rootScope.$broadcast('updateCards', [])
         })
 
       return answerFromApi
     },
-    prevParams: { page: 1, pageSize: 5, country: 'us' }
+    url: '',
+    prevParams: { page: 1, pageSize: 5, country: 'us' },
+    setFetching: function (params) {
+      $rootScope.$broadcast('fetchingUpdate', params)
+    }
   }
 })

@@ -1,0 +1,12 @@
+<h1 class="news__heading mt-3 ml-3">Top headlines</h1>
+<div ng-controller="TopHeadlinesCtrl" class="news__news-content news__filters_space_left container mt-5">
+   <filter-category-country></filter-category-country>
+
+   <loader></loader>
+
+   <div class="news__news-cards-list news__filters_space_top">
+        <card-news></card-news>
+   </div>
+
+   <pagination></pagination>
+</div>
