@@ -68,7 +68,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       self.setFetching(true)
 
       var answerFromApi = $http.get(url, {
-        headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
+        headers: {'x-api-key': '53220362b5044a9a9cbdf73bde56d0b8'},
         params
       })
         .then(function (res) {
