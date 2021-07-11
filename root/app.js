@@ -27,7 +27,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   })
 
   .factory('paginationManager', function ($rootScope) {
-    var totalPages = 0
+    var totalPages = 1
 
     return {
       getTotalPages: function (start = 1) {
@@ -77,7 +77,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
           self.setFetching(false)
         })
         .catch(function (err) {
-
           self.setFetching(false)
           alertsManager.addError(err.data.message)
           $rootScope.$broadcast('updateCards', [])

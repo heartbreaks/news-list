@@ -1,10 +1,10 @@
 angular.module('newsFeed')
 .component('pagination', {
-    template: '<div ng-if="$ctrl.totalPages" class="news__pagination  d-flex justify-content-center">\n' +
+    template: '<div ng-if="$ctrl.totalPages && $ctrl.totalPages.length > 0" class="news__pagination  d-flex justify-content-center">\n' +
               '  <nav aria-label="Page navigation example">\n' +
               '    <ul class="pagination">\n' +
               '      <li class="page-item" ng-class="{disabled: $ctrl.currentPage === 1}">\n' +
-              '        <a ng-click="$ctrl.paginate($ctrl.currentPage - 1)" class="page-link" href="#" aria-label="Previous">\n' +
+              '        <a ng-click="$ctrl.paginate($ctrl.currentPage - 1)" class="page-link" aria-label="Previous">\n' +
               '          <span ng-click="$ctrl.paginate($ctrl.currentPage - 1)" aria-hidden="true">&laquo;</span>\n' +
               '        </a>\n' +
               '      </li>\n' +
@@ -21,6 +21,7 @@ angular.module('newsFeed')
         var self = this
         this.totalPages = false
         this.currentPage = 1
+        this.show = true
 
         $scope.$on('updatePages', function (event, args){
           self.totalPages = args
