@@ -7,4 +7,4 @@
 
 Как откроется проект в IDE, в случае **WebStorm** необходимо открыть index.html и навести курсор в правый верхний угол! Как на картинке
 
-[url=https://imgbb.com/][img]https://i.ibb.co/KbdN4t1/lmao.png[/img][/url]
+![alt text](https://i.ibb.co/KbdN4t1/lmao.png)
