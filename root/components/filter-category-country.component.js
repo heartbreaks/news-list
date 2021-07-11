@@ -35,8 +35,6 @@ angular.module('newsFeed')
           {title: 'Technology', value: 'technology'},
         ]
 
-        console.log()
-
         self.getFilteredNews = function () {
           if (self.filterCountry && self.filterCategory) {
             paginationManager.setCurrentPage(1)
