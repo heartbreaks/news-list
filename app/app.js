@@ -29,16 +29,12 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   //   }
   // })
 
-  .factory('alertsManager', function () {
+  .factory('alertsManager', function ($rootScope) {
     return {
       alerts: [],
       addError: function (body) {
         var self = this
-        self.alerts.push({body})
-      },
-      deleteError: function () {
-        this.alerts = []
-        return this.alerts
+        $rootScope.$broadcast('error', {alert: body, state: true})
       }
     }
   })
@@ -70,8 +66,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
   )
 
-.factory('networkRequests', function ($http, alertsManager, paginationManager) {
-
+.factory('networkRequests', function ($http, alertsManager, paginationManager, $rootScope) {
   return {
     get: function (url, params, ...args) {
       var self = this
@@ -89,7 +84,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
           return { res: res.data.articles, }
         })
         .catch(function (err) {
-          alertsManager.addError(err.data.message)
+          alertsManager.addError(err?.data.message)
         })
 
       return answerFromApi
