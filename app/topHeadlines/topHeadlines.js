@@ -11,17 +11,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 app.controller('TopHeadlinesCtrl', function($http, $scope, networkRequests, paginationManager) {
   var url = 'https://newsapi.org/v2/top-headlines';
-  $scope.currentPage = 1
-  $scope.news = networkRequests.currentNews
 
   /* get all news without params */
   networkRequests.get(url, { page: 1, pageSize: 5, country: 'us' })
-
-  $scope.paginate = function (pageList) {
-    $scope.currentPage = pageList
-
-    networkRequests.get(url, {...networkRequests.prevParams, page: pageList})
-  }
-
-
 })

@@ -9,14 +9,14 @@ angular.module('newsFeed')
               '       <button type="submit" class="btn btn-primary mt-2 col-2">Filter</button>\n' +
               '     </form>\n' +
               '   </div>',
-    controller: function filterKeywordCtrl(networkRequests) {
+    controller: function filterKeywordCtrl(networkRequests, paginationManager) {
     var self = this
-    var url = 'https://newsapi.org/v2/everything'
-
     self.keyword = ''
 
     self.getKeywordsNews = function () {
-        networkRequests.get(url, {
+        paginationManager.setCurrentPage(1)
+
+        networkRequests.get(networkRequests.url, {
           ...networkRequests.prevParams,
           ...{
             q: self.keyword,

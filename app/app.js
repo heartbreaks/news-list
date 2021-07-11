@@ -26,8 +26,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     }
   })
 
-  .factory('paginationManager', function () {
-    var totalPages = 1
+  .factory('paginationManager', function ($rootScope) {
+    var totalPages = 0
 
     return {
       getTotalPages: function (start = 1) {
@@ -48,17 +48,22 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       },
       setTotalPages: function (newPages) {
         totalPages = newPages
+        $rootScope.$broadcast('updatePages', this.getTotalPages())
       },
+      setCurrentPage: function (page) {
+        $rootScope.$broadcast('setFilteredPage', page)
+      }
     }
     }
   )
 
 .factory('networkRequests', function ($http, alertsManager, paginationManager, $rootScope) {
   return {
-    get: function (url, params, ...args) {
+    get: function (url, params) {
       var self = this
 
       self.prevParams = params
+      self.url = url
 
       var answerFromApi = $http.get(url, {
         headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
@@ -66,9 +71,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       })
         .then(function (res) {
           paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
-          self.currentNews = res.data.articles
           $rootScope.$broadcast('updateCards', res.data.articles)
-          return { res: res.data.articles, }
         })
         .catch(function (err) {
           alertsManager.addError(err?.data.message)
@@ -77,6 +80,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
       return answerFromApi
     },
+    url: '',
     prevParams: { page: 1, pageSize: 5, country: 'us' }
   }
 })

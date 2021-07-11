@@ -14,9 +14,8 @@ angular.module('newsFeed')
               '      </div>\n' +
               '      <button type="submit" class="btn btn-primary col-2">Filter</button>\n' +
               '    </form>',
-    controller: function filterCategoryCtrl(networkRequests) {
+    controller: function filterCategoryCtrl(networkRequests, paginationManager) {
         var self = this;
-        var url = 'https://newsapi.org/v2/top-headlines';
 
         self.filterCountry = ''
         self.filterCategory = ''
@@ -35,14 +34,16 @@ angular.module('newsFeed')
         ]
 
         self.getFilteredNews = function () {
-            networkRequests.get(url, {
-              ...networkRequests.prevParams,
-              ...{
-                country: self.filterCountry,
-                category: self.filterCategory,
-                page: 1,
-              }
-            })
+          paginationManager.setCurrentPage(1)
+
+          networkRequests.get(networkRequests.url, {
+            ...networkRequests.prevParams,
+            ...{
+              country: self.filterCountry,
+              category: self.filterCategory,
+              page: 1,
+            }
+          })
           }
 
     }
