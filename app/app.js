@@ -65,6 +65,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       self.prevParams = params
       self.url = url
 
+      self.setFetching(true)
+
       var answerFromApi = $http.get(url, {
         headers: {'x-api-key': 'a45260bf68fe46daa784a7a257d35b28'},
         params
@@ -72,6 +74,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         .then(function (res) {
           paginationManager.setTotalPages(Math.round(res.data.totalResults / 5))
           $rootScope.$broadcast('updateCards', res.data.articles)
+          self.setFetching(false)
         })
         .catch(function (err) {
           alertsManager.addError(err?.data.message)
@@ -81,6 +84,9 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
       return answerFromApi
     },
     url: '',
-    prevParams: { page: 1, pageSize: 5, country: 'us' }
+    prevParams: { page: 1, pageSize: 5, country: 'us' },
+    setFetching: function (params) {
+        $rootScope.$broadcast('fetchingUpdate', params)
+    }
   }
 })

@@ -18,11 +18,11 @@ angular.module('newsFeed')
     '   </div>\n' +
     '</div>\n',
     controller: function NewsCardController($scope) {
-    var self = this
-    self.news = []
-        $scope.$on('updateCards', function(event, args) {
-            console.log(args)
-            self.news = args
-        })
+      var self = this
+      self.news = []
+
+      $scope.$on('updateCards', function(event, args) {
+        self.news = args
+      })
     }
 })
